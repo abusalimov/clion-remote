@@ -42,6 +42,9 @@ RUN ( \
   && mkdir /run/sshd
 
 RUN useradd -m user \
-  && yes password | passwd user
+  && yes password | passwd user \
+  && mkdir -p /etc/sudoers.d \
+  && echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user \
+  && chmod 0440 /etc/sudoers.d/user
 
 CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config_test_clion"]
