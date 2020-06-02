@@ -41,7 +41,9 @@ RUN ( \
   ) > /etc/ssh/sshd_config_test_clion \
   && mkdir /run/sshd
 
-RUN useradd -m user \
+RUN groupmod -g 2020 dialout \
+  &&groupadd -r --gid 20 user \
+  && useradd --no-log-init --create-home -g user -r --uid 501 user \
   && yes password | passwd user \
   && mkdir -p /etc/sudoers.d \
   && echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user \
