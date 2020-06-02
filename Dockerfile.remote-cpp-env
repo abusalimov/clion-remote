@@ -24,7 +24,14 @@ RUN apt-get update \
       rsync \
       tar \
       python \
+      sudo \
+      ninja-build \
   && apt-get clean
+
+RUN version=3.17.3; \
+     wget -O cmake-$version-Linux-x86_64.sh https://github.com/Kitware/CMake/releases/download/v$version/cmake-$version-Linux-x86_64.sh \
+  && sh cmake-$version-Linux-x86_64.sh -- --skip-license --prefix=/usr/local \
+  && rm -f cmake-$version-Linux-x86_64.sh
 
 RUN ( \
     echo 'LogLevel DEBUG2'; \
